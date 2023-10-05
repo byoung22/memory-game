@@ -18,7 +18,7 @@ function Card({ name, imageUrl, dataKey, chooseCard }) {
 function CardList({ data, chooseCard }) {  
   return data.map((obj) => {
     return (
-      <div key={obj.id}>
+      <div key={obj.id} className='card'>
         {(obj.imageUrl) ? <Card name={obj.name} imageUrl={obj.imageUrl} dataKey={obj.id} chooseCard={chooseCard}/> : <p>Loading...</p>}
       </div>
     );
@@ -33,7 +33,7 @@ function App() {
 
   async function fetchPokemon() {
     const fetchedData = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 10; i++) {
       let id = generateId();
       while (fetchedData.includes(id)) id = generateId();
       try {
@@ -87,14 +87,18 @@ function App() {
   }
 
   return (
-    <>
-      <div>
-        <div>Score: {score}</div>
-        <div>High Score: {high}</div>
+    <div>
+      <header>
+        <div>
+          <div>Score: {score}</div>
+          <div>High Score: {high}</div>
+        </div>
+        <button onClick={fetchPokemon}>New Pokemon</button>
+      </header>
+      <div className='card-container'>
+        <CardList data={data} chooseCard={chooseCard}/>
       </div>
-      <button onClick={fetchPokemon}>New Pokemon</button>
-      <CardList data={data} chooseCard={chooseCard}/>
-    </>
+    </div>
   )
 }
 
